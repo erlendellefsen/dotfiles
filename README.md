@@ -5,6 +5,7 @@
 - ghostty
 - linearmouse
 - gh
+- gitconfig
 
 ---
 

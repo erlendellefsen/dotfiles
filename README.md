@@ -2,6 +2,7 @@
 
 ## Included
 - zshrc
+- zprofile
 - ghostty
 - linearmouse
 - gh

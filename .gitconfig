@@ -1,7 +1,0 @@
-[user]
-	name = Erlend Ellefsen
-	email = erlend.ellefsen@intility.no
-[init]
-	defaultBranch = main
-[pull]
-	rebase = true

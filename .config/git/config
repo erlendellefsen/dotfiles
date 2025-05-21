@@ -1,0 +1,58 @@
+[user]
+	name = Erlend Ellefsen
+	email = erlend.ellefsen@intility.no
+[init]
+	defaultBranch = main
+[push]
+    default = current
+    autoSetupRemote = true
+    followTags = true
+[pull]
+    default = current
+	rebase = true
+[rebase]
+    autoStash = true
+    missingCommitsCheck = warn
+[branch]
+    sort = -committerdate
+[pager]
+    branch = false
+[core]
+    compression = 9
+    whitespace = error
+    preloadIndex = true
+	editor = code --wait
+[advice]
+    addEmptyPathspecs = false
+    pushNonFastForward = false
+    statusHints = false
+[log]
+    abbrevCommit = true
+    graphColors = blue,yellow,cyan,magenta,green,red
+[status]
+    showBranch = true
+    showStash = true
+    showUntrackedFiles = all
+[diff]
+    context = 3
+    renames = copies
+    interHunkContext = 10
+[commit]
+    template = ~/.config/git/template
+[interactive]
+    singleKey = true
+[color "decorate"]
+    HEAD = red
+    branch = blue
+    tag = yellow
+    remoteBranch = magenta
+[color "branch"]
+    current = magenta
+    local = default
+    remote = yellow
+    upstream = green
+    plain = blue
+[url "git@github.com:ErlendEllefsen/"]
+    insteadOf = "ee:"
+[url "git@github.com:intility/"]
+    insteadOf = "it:"

@@ -1,8 +1,10 @@
 # My dotfiles
 
 ## Included
-- zsh
+- zshrc
 - ghostty
+- linearmouse
+- gh
 
 ---
 

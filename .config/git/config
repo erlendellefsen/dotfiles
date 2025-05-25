@@ -5,7 +5,7 @@
 [gpg]
 	format = ssh
 [commit]
-    gpgSign = true
+	gpgSign = true
     template = ~/.config/git/template
 [init]
 	defaultBranch = main

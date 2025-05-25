@@ -1,6 +1,12 @@
 [user]
 	name = Erlend Ellefsen
 	email = erlend.ellefsen@intility.no
+	signingkey = /Users/ekbe/.ssh/id_ed25519.pub
+[gpg]
+	format = ssh
+[commit]
+    gpgSign = true
+    template = ~/.config/git/template
 [init]
 	defaultBranch = main
 [push]
@@ -15,6 +21,9 @@
     missingCommitsCheck = warn
 [branch]
     sort = -committerdate
+[column]
+	ui = auto
+    color = always
 [pager]
     branch = false
 [core]
@@ -37,10 +46,11 @@
     context = 3
     renames = copies
     interHunkContext = 10
-[commit]
-    template = ~/.config/git/template
 [interactive]
     singleKey = true
+[rerere]
+    autoUpdate = true
+    enable = true
 [color "decorate"]
     HEAD = red
     branch = blue

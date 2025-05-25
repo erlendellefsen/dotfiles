@@ -7,6 +7,7 @@
 - linearmouse
 - gh
 - gitconfig
+- ohmyposh
 
 ---
 

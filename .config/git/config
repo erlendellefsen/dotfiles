@@ -1,7 +1,7 @@
 [user]
 	name = Erlend Ellefsen
 	email = erlend.ellefsen@intility.no
-	signingkey = /Users/ekbe/.ssh/id_ed25519
+	signingkey = /Users/ekbe/.ssh/git_signing_key
 [gpg]
 	format = ssh
 [commit]

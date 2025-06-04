@@ -3,7 +3,8 @@
 ## Git
 alias ga='git add'
 alias gap='ga --patch'
-alias gs='git status --short'
+alias gs='git switch'
+alias gst='git status --short'
 alias gd='git diff --output-indicator-new=" " --output-indicator-old=" "'
 alias gc='git commit'
 alias gp='git push'

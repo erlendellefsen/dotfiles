@@ -1,1 +1,10 @@
 .DS_Store
+
+# Claude local files
+.claude/.anthropic
+.claude/ide
+.claude/projects
+.claude/shell-snapshots
+.claude/statsig
+.claude/todos
+

@@ -67,7 +67,7 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# Shell integrations
+# Shell integrations 
 eval "$(fzf --zsh)"
 if [[ "$CLAUDECODE" != "1" ]]; then
     eval "$(zoxide init --cmd cd zsh)"
@@ -78,3 +78,12 @@ source <(echo 'export PATH="$HOME/.asdf/shims:$PATH"')
 export DOTNET_ROOT="/Users/ekbe/.asdf/installs/dotnet/9.0.101"
 export PATH="$PATH:$DOTNET_ROOT"
 export PATH="$PATH:$HOME/.dotnet/tools"
+
+# Opt out of Azure Functions telemetry
+export FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT=1
+
+# SSH Agent
+# ssh-add --apple-use-keychain ~/.ssh/git_signing_key
+eval "$(ssh-agent -s)" > /dev/null
+ssh-add --apple-use-keychain ~/.ssh/git_signing_key
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519

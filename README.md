@@ -1,42 +1,57 @@
 # My dotfiles
 
-This is a personal dotfiles repository that serves dual purposes:
-1. Managing system dotfiles with GNU Stow for symlink creation
-2. Housing Claude Code customizations (commands, actions, settings) in the `.claude` folder
+Personal dotfiles repository for macOS with:
+- System dotfiles managed via GNU Stow
+- Claude Code customizations in `.claude/`
 
-## Included
-- zshrc
-- zprofile
-- ghostty
-- linearmouse
-- gh
-- gitconfig
-- ohmyposh
-- **Claude Code integration** (.claude folder with custom commands, settings, and documentation)
+## Prerequisites
 
----
+### Required
+```bash
+brew install stow          # Symlink manager
+brew install oh-my-posh    # Prompt theming
+brew install fzf           # Fuzzy finder
+brew install zoxide        # Smarter cd command
+```
 
-`dotfiles` directory is placed in the `$HOME` folder.
+### Optional
+```bash
+brew install --cask ghostty      # Terminal emulator
+brew install --cask linear-mouse # Mouse customization
+brew install gh                  # GitHub CLI
+brew install asdf                # Version manager
+```
+
+### Installed automatically
+- **Zinit** - Plugin manager (auto-installs on first shell load)
+- **zsh-autosuggestions** - Command suggestions
+- **zsh-completions** - Additional completions
+- **zsh-syntax-highlighting** - Syntax coloring
+- **fzf-tab** - Fuzzy tab completion
+
+## Installation
 
 ```bash
 cd $HOME
-mkdir dotfiles
-cd dotfiles
-git clone git@github.com:ErlendEllefsen/dotfiles.git
-```
-
-## Adding dotfiles
-**Important**
-- When copying over dotfiles to the `dotfiles` directory they need to keep the same layout as if they were in the `$HOME` folder.
-- Remember to delete the dotfile in the `$HOME` directory after copying it to the `dotfiles` directory.
-
-## Using GNU Stow to create symlinks
-Just install `stow` and run `stow .` in your `dotfiles` directory.
-```bash
-brew install stow
-cd dotfiles
+git clone git@github.com:ErlendEllefsen/dotfiles.git ~/dotfiles
+cd ~/dotfiles
 stow --adopt .
 ```
+
+## Included Configs
+- `.zshrc` / `.zprofile` - Shell configuration
+- `.config/ghostty/` - Terminal settings
+- `.config/ohmyposh/` - Prompt theme
+- `.config/linearmouse/` - Mouse settings
+- `.config/gh/` - GitHub CLI
+- `.gitconfig` - Git configuration
+- `.claude/` - Claude Code commands and settings
+
+## Adding New Dotfiles
+
+1. Copy file to `dotfiles/` keeping the same path structure as `$HOME`
+2. Delete the original from `$HOME`
+3. Run `stow --adopt .` to create symlinks
 
 ## Claude Code Configuration
 

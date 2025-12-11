@@ -7,4 +7,10 @@
 .claude/shell-snapshots
 .claude/statsig
 .claude/todos
+.claude/debug
+.claude/file-history
+.claude/plugins
+.claude/plans
+.claude/session-env
+.claude/history.jsonl
 

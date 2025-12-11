@@ -52,26 +52,3 @@ stow --adopt .
 1. Copy file to `dotfiles/` keeping the same path structure as `$HOME`
 2. Delete the original from `$HOME`
 3. Run `stow --adopt .` to create symlinks
-
-## Claude Code Configuration
-
-The `.claude` folder contains Claude Code-specific configurations and is symlinked to `$HOME/.claude`:
-
-### Custom Commands
-- **create-command.md**: Utility for creating new Claude Code commands
-- **pre-commit-review.md**: Workflow command for automated pre-commit code reviews
-
-### Documentation
-- **commands-guide.md**: Comprehensive guide for creating and managing custom commands
-- **organization-guide.md**: Best practices for organizing Claude Code workflows
-
-### Settings
-- **settings.json**: Claude Code configuration with custom themes, tools, and integrations
-- Includes shell integration optimizations and environment variable handling
-
-### Features Added
-- Custom command framework for extending Claude Code functionality
-- Pre-commit workflow automation for code quality
-- Comprehensive documentation and guides
-- Optimized shell integration with zoxide conflict prevention
-

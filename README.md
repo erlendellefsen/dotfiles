@@ -7,10 +7,10 @@ Personal dotfiles repository for macOS managed with [GNU Stow](https://www.gnu.o
 ### Required
 ```bash
 brew install --cask ghostty      # Terminal emulator
-brew install stow          # Symlink manager
-brew install oh-my-posh    # Prompt theming
-brew install fzf           # Fuzzy finder
-brew install zoxide        # Smarter cd command
+brew install stow                # Symlink manager
+brew install oh-my-posh          # Prompt theming
+brew install fzf                 # Fuzzy finder
+brew install zoxide              # Smarter cd command
 brew install asdf                # Version manager
 ```
 

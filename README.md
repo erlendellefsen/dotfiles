@@ -1,25 +1,23 @@
 # My dotfiles
 
-Personal dotfiles repository for macOS with:
-- System dotfiles managed via GNU Stow
-- Claude Code customizations in `.claude/`
+Personal dotfiles repository for macOS managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 ## Prerequisites
 
 ### Required
 ```bash
+brew install --cask ghostty      # Terminal emulator
 brew install stow          # Symlink manager
 brew install oh-my-posh    # Prompt theming
 brew install fzf           # Fuzzy finder
 brew install zoxide        # Smarter cd command
+brew install asdf                # Version manager
 ```
 
 ### Optional
 ```bash
-brew install --cask ghostty      # Terminal emulator
 brew install --cask linear-mouse # Mouse customization
 brew install gh                  # GitHub CLI
-brew install asdf                # Version manager
 ```
 
 ### Installed automatically

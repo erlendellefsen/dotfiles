@@ -1,0 +1,178 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "lsp_document_colors": "inlay",
+  "auto_update_extensions": {
+    "csharp": false
+  },
+  "cursor_shape": "bar",
+  "cli_default_open_behavior": "new_window",
+  "unnecessary_code_fade": 0.3,
+  "ui_font_weight": 400.0,
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    }
+  },
+  "outline_panel": {
+    "button": false,
+    "git_status": true,
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "button": false,
+    "dock": "right"
+  },
+  "git_panel": {
+    "scrollbar": {
+      "show": "auto"
+    },
+    "show_count_badge": true,
+    "sort_by_path": false,
+    "collapse_untracked_diff": false,
+    "commit_title_max_length": 72,
+    "tree_view": true,
+    "dock": "right"
+  },
+  "agent": {
+    "sidebar_side": "left",
+    "button": false,
+    "dock": "left",
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4.5"
+    },
+    "model_parameters": []
+  },
+  "colorize_brackets": true,
+  "inlay_hints": {
+    "enabled": false
+  },
+  "indent_guides": {
+    "enabled": true
+  },
+  "auto_indent": "syntax_aware",
+  "hard_tabs": false,
+  "toolbar": {
+    "code_actions": false,
+    "agent_review": true,
+    "quick_actions": false,
+    "breadcrumbs": false
+  },
+  "scrollbar": {
+    "axes": {
+      "horizontal": true,
+      "vertical": true
+    },
+    "git_diff": true,
+    "cursors": false,
+    "show": "auto"
+  },
+  "gutter": {
+    "breakpoints": false,
+    "min_line_number_digits": 3,
+    "folds": false,
+    "runnables": true,
+    "line_numbers": true
+  },
+  "hover_popover_enabled": true,
+  "sticky_scroll": {
+    "enabled": false
+  },
+  "scroll_beyond_last_line": "one_page",
+  "excerpt_context_lines": 2,
+  "buffer_font_weight": 400.0,
+  "ui_font_family": ".ZedSans",
+  "preview_tabs": {
+    "enabled": false
+  },
+  "debugger": {
+    "button": false
+  },
+  "search": {
+    "button": false
+  },
+  "diagnostics": {
+    "button": true,
+    "inline": {
+      "enabled": false
+    }
+  },
+  "prettier": {
+    "allowed": false
+  },
+  "zoomed_padding": true,
+  "active_pane_modifiers": {
+    "border_size": 0.0,
+    "inactive_opacity": 1.0
+  },
+  "bottom_dock_layout": "contained",
+  "title_bar": {
+    "show_menus": false,
+    "show_user_picture": false,
+    "show_onboarding_banner": true,
+    "show_project_items": true,
+    "show_branch_name": true,
+  },
+  "terminal": {
+    "button": false
+  },
+  "project_panel": {
+    "indent_guides": {
+      "show": "always"
+    },
+    "git_status_indicator": true,
+    "diagnostic_badges": true,
+    "auto_reveal_entries": true,
+    "bold_folder_labels": false,
+    "indent_size": 10.0,
+    "entry_spacing": "standard",
+    "default_width": 240.0,
+    "dock": "left",
+  },
+  "use_system_window_tabs": false,
+  "buffer_line_height": "comfortable",
+  "icon_theme": {
+    "mode": "system",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Frappé"
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  "status_bar": {
+    "show_active_file": true,
+  },
+  "tab_bar": {
+    "show_tab_bar_buttons": true,
+    "show_nav_history_buttons": true,
+    "show": false
+  },
+  "minimap": {
+    "show": "never",
+    "thumb": "always"
+  },
+  "buffer_font_family": ".ZedMono",
+  "auto_indent_on_paste": true,
+  "soft_wrap": "editor_width",
+  "base_keymap": "VSCode",
+  "ui_font_size": 16.0,
+  "buffer_font_size": 14.0,
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Latte - No Italics",
+    "dark": "Catppuccin Frappé - No Italics"
+  }
+}

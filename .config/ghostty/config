@@ -1,1 +1,12 @@
-theme = Catppuccin Frappe
+theme = One Dark
+keybind = shift+enter=text:\x1b\r
+
+# Scrollback
+scrollback-limit = 100000
+
+# Splits
+unfocused-split-opacity = 0.75
+split-divider-color = #3e4451
+
+# Working directory
+working-directory = ~/code

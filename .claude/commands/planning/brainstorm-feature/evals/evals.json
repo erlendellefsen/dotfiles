@@ -1,0 +1,47 @@
+{
+  "skill_name": "brainstorm-feature",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I want to add email notifications when a high-priority security alert is triggered in a company's tenant. Users are missing critical alerts and need to be notified outside the app.",
+      "expected_output": "A markdown plan file covering: what we're building, acceptance criteria with checkboxes, technical approach referencing the project stack (.NET + Azure AD + EF), implementation phases with concrete tasks, edge cases, and open questions. The plan should reflect answers to interview questions about recipient targeting, notification content, unsubscribe behaviour, etc.",
+      "files": [],
+      "expectations": [
+        "A markdown file is created in the .claude/docs/brainstorm/ directory of the project",
+        "The plan includes acceptance criteria with checkbox items",
+        "The plan includes a phased implementation plan with checkbox tasks",
+        "The plan mentions the project's tech stack (e.g., .NET, Azure AD, email service, or EF)",
+        "The plan includes an edge cases or risks section",
+        "The interview asked at least one clarifying question before producing the plan"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "I have an idea for letting users export their security incidents to a CSV or Excel file so they can share monthly reports with management.",
+      "expected_output": "A markdown plan covering: problem statement (reporting need), acceptance criteria, technical approach (API endpoint, file generation, what columns/data to include, permissions), implementation plan, and edge cases around large datasets, multi-tenant data isolation, and permissions.",
+      "files": [],
+      "expectations": [
+        "A markdown file is created in the .claude/docs/brainstorm/ directory of the project",
+        "The plan includes acceptance criteria with checkbox items",
+        "The plan addresses what data/columns to include in the export",
+        "The plan mentions tenant isolation or permissions to ensure companies only export their own data",
+        "The plan includes a phased implementation plan with checkbox tasks",
+        "The interview asked at least one clarifying question before producing the plan"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "brainstorm an audit log feature — admins should be able to see who did what in the security center, like who changed a policy or dismissed an alert",
+      "expected_output": "A markdown plan covering: what events to log, data model for audit entries (actor, action, target, timestamp), API design, frontend display, retention policy, and implementation plan. Should reflect the multi-tenant architecture.",
+      "files": [],
+      "expectations": [
+        "A markdown file is created in the .claude/docs/brainstorm/ directory of the project",
+        "The plan includes acceptance criteria with checkbox items",
+        "The plan includes a phased implementation plan with checkbox tasks",
+        "The plan discusses what events or actions to capture in the audit log",
+        "The plan considers the multi-tenant architecture (per-company audit logs or scoping)",
+        "The interview asked at least one clarifying question before producing the plan"
+      ]
+    }
+  ]
+}

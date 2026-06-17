@@ -30,7 +30,7 @@
     compression = 9
     whitespace = error
     preloadIndex = true
-	editor = code --wait
+	editor = zed --wait
 [advice]
     addEmptyPathspecs = false
     pushNonFastForward = false

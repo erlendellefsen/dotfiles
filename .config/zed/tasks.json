@@ -1,0 +1,50 @@
+[
+  {
+    "label": "Frontend: Dev Server",
+    "command": "deno task dev",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/frontend",
+    "use_new_terminal": true
+  },
+  {
+    "label": "Frontend: Build",
+    "command": "deno task build",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/frontend"
+  },
+  {
+    "label": "Frontend: Lint",
+    "command": "deno lint",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/frontend"
+  },
+  {
+    "label": "Frontend: Format",
+    "command": "deno fmt",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/frontend"
+  },
+  {
+    "label": "Backend: Build",
+    "command": "dotnet build",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/backend"
+  },
+  {
+    "label": "Backend: Run",
+    "command": "dotnet run --project src/SecCenterBackend.csproj",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/backend",
+    "use_new_terminal": true
+  },
+  {
+    "label": "Backend: Watch",
+    "command": "dotnet watch --project src/SecCenterBackend.csproj",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/backend",
+    "use_new_terminal": true
+  },
+  {
+    "label": "Backend: Test",
+    "command": "dotnet test",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/backend"
+  },
+  {
+    "label": "Docker: Start DB",
+    "command": "docker-compose up -d",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/backend"
+  }
+]

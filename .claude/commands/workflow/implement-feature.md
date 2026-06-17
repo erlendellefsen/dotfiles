@@ -1,196 +1,188 @@
 ---
-category: "workflow"
-phase: "implementation"
-complexity: "complex"
-requires_review: true
-tags: ["implementation", "feature-development", "testing", "incremental-development"]
+name: implement-feature
+description: >
+  Implement a feature from a brainstorm plan. Use this skill when the user has a brainstorm plan
+  ready and wants to start building. Trigger on phrases like "implement the feature", "let's build
+  this", "start implementing", "implement from the plan", "build the feature", "execute the plan",
+  or any time the user references a brainstorm doc and wants to move into code. Also trigger when
+  the user provides a path to a brainstorm markdown file and asks to implement it.
 ---
 
 # Implement Feature
 
-Systematically implement features based on brainstorm documentation through incremental development with continuous testing and validation.
+Implement a feature from a brainstorm plan, in phases, with parallel subagents where safe, tests
+before and after, documentation checks, and a conventional-commits git summary at the end.
 
-## Purpose
-Execute comprehensive feature implementation following brainstorm plans, developing incrementally with automatic issue resolution and continuous validation.
+---
 
-## When to Use
-- After completing `/planning/brainstorm-feature` and approving the plan
-- When you have detailed brainstorm documentation ready for implementation
-- For systematic, phase-by-phase feature development
-- When you need automated testing and validation throughout development
+## Step 1: Load the plan
 
-## Arguments
-- `$ARGUMENTS` - Optional: Feature name or brainstorm file identifier. Will auto-discover available brainstorms if not provided or unclear.
+If the user gave a file path or feature name, read that file. If not, list `.claude/docs/brainstorm/`
+and ask which plan to implement. Read the full plan before doing anything else.
 
-## Prompt
+Validate the plan has: acceptance criteria, a technical approach, and an implementation plan with
+phases. If any are missing, tell the user what's absent and ask whether to proceed anyway.
 
-I need to implement a feature based on existing brainstorm documentation. This will be done incrementally with continuous testing and validation.
+---
 
-**Step 1: Brainstorm Documentation Discovery**
-${ARGUMENTS ? `Looking for brainstorm documentation for: "$ARGUMENTS"` : "No specific feature specified - I'll discover available brainstorm files."}
+## Step 2: Pre-flight exploration (parallel)
 
-```bash
-!find .claude/docs/brainstorm -name "*.md" 2>/dev/null || echo "No brainstorm directory found"
+Before writing a single line of code, understand the terrain. Spawn parallel subagents to explore
+the areas the plan says you'll touch. Each agent should:
+
+- Read the files named in "Key files to touch" (or infer from technical approach if not listed)
+- Identify the patterns already in use (naming, structure, how similar features are built)
+- Note anything that contradicts or complicates the plan
+
+Pay special attention to facts the plan assumes but hasn't confirmed — for example, whether an
+entity the plan says to "create" already exists, whether a method the plan references actually
+exists in the codebase, or whether the plan uses the right field types (e.g., plan says "priority 1
+or 2" but the codebase uses string names).
+
+Bring the findings together into a short summary: what was confirmed, what conflicts with the plan,
+and what decisions are needed before coding. If there are conflicts or unresolved questions, go to
+the "Ask at crossroads" section below before proceeding to Step 3.
+
+---
+
+## Step 3: Baseline tests
+
+Before any changes: run the test suite. Record the result (pass/fail counts). If tests are already
+failing, tell the user and ask how to proceed — don't write code on top of a broken baseline.
+
+---
+
+## Step 4: Implement phases
+
+Work through the implementation plan phase by phase. Within a phase, look for work that is
+independent across layers (e.g., backend service logic vs frontend component) and parallelize across
+subagents when safe. Tasks that share a file or depend on each other must stay sequential.
+
+For each phase:
+
+**4a. Announce** — state the phase name, what it does, and which subagents (if any) will run in
+parallel.
+
+**4b. Implement** — write code that matches the plan. Follow the existing patterns you found in
+Step 2. Don't deviate from the plan without asking. If you hit something unexpected mid-phase that
+requires an architectural decision, go to "Ask at crossroads" immediately.
+
+**4c. Test new code** — for any logic that is deterministic and verifiable (data transformations,
+service methods, API responses, utility functions), write tests. Follow the project's existing test
+patterns and frameworks exactly. Tests must be meaningful: test the real behavior, not
+implementation details.
+
+**4d. Validate** — run the full test suite. All tests must pass before moving to the next phase.
+Auto-fix legitimate bugs in the implementation. Never adjust a test to make it pass if the
+implementation is wrong — fix the implementation.
+
+**4e. Checkpoint** — summarize what was built, show test results, and wait for a quick "looks good"
+before continuing. Keep checkpoints light: one short paragraph + test status is enough.
+
+---
+
+## Ask at crossroads
+
+When you hit an architectural decision not covered by the plan — either during pre-flight (Step 2)
+or mid-implementation (Step 4b) — stop and present it as a numbered list:
+
+```
+Before I continue, I need answers to these questions:
+
+1. [Question about X]: [1-sentence context on why this matters]
+   My read: [your recommendation if you have one]
+
+2. [Question about Y]: ...
 ```
 
-${ARGUMENTS ? "" : "If multiple brainstorm files exist, I'll list them and ask you to choose which feature to implement."}
+State clearly that you will not proceed until these are answered. Do not provide a "conditional
+implementation" (e.g., "assuming the answer is X, here's what I'd build...") as a substitute for
+asking — write the questions, stop, and wait.
 
-${ARGUMENTS ? "If the specified feature name doesn't match exactly, I'll show similar options and ask for clarification." : ""}
+---
 
-Load the selected brainstorm documentation and validate it contains:
-- Clear feature requirements and scope
-- Technical architecture and component breakdown
-- Implementation plan with defined phases
-- Success criteria and validation points
+## Step 5: Post-implementation test run
 
-**Step 2: Code Comments Strategy**
-Before starting implementation, ask: "What code commenting style would you like me to use for this implementation? For example:
-- Minimal comments only for complex logic
-- JSDoc/docstring style for functions and classes
-- Inline explanations for business logic
-- Architecture decision comments
-- Or follow existing project comment patterns?"
+Run the full test suite again at the very end. All tests that passed in Step 3 must still pass. No
+regressions. If anything fails, fix it before continuing.
 
-Wait for your preference before proceeding.
+---
 
-**Step 3: Project Context Analysis**
-Analyze current project state:
+## Step 6: Documentation
+
+Check whether the feature warrants a documentation update. Do this concretely:
+
 ```bash
-!pwd && git status --porcelain
-!find . -name "package.json" -o -name "Cargo.toml" -o -name "go.mod" -o -name "requirements.txt" | head -5
+# Search for existing docs on this feature area
+grep -r "<feature keyword>" docs/ --include="*.md" -l
+# or
+ls docs/features/
 ```
 
-- Review project structure and tech stack
-- Check for existing related code or components
-- Identify testing framework and patterns used
-- Look for MCP servers configuration and suggest usage if relevant for documentation lookup
-- Check for project-specific docs folder structure: `!find . -path "*/docs/feature*" -type d 2>/dev/null`
+**For new features:** if the feature is user-visible or changes how an API/integration works, and
+docs exist in the project, create or update a doc that matches the existing style. Keep it short:
+what the feature does, how to use it, any configuration. Don't repeat what's already in code.
 
-**Step 4: Implementation Strategy Setup**
-Based on the brainstorm plan:
-- Break down implementation into discrete, testable components
-- Map each component to existing project patterns and structure
-- Identify dependencies between components
-- Plan testing approach for each component
-- Determine if progress tracking in brainstorm file is needed (for "big" features)
+**For changes to existing features:** if you found a matching doc, update only the parts that
+changed. Don't rewrite from scratch.
 
-Ask for confirmation of the implementation approach before proceeding.
+If the docs folder doesn't exist, or the feature is purely internal with no user-facing behavior
+change, skip this step.
 
-**Step 5: Incremental Implementation Process**
+---
 
-For each major component/phase in the brainstorm plan:
+## Step 7: Git summary
 
-**5a. Component Planning**
-- Announce which component is being implemented
-- Reference the specific requirements from brainstorm documentation
-- Explain how this fits into the overall architecture
+After a successful implementation, produce a ready-to-use git summary the user can copy:
 
-**5b. Implementation**
-- Create/modify files following existing project patterns
-- Implement the component according to brainstorm specifications
-- Follow established coding conventions and styles
-- **Add concise code comments** using the agreed-upon style
-- Integrate properly with existing systems
+```
+Branch name:    feat/<short-kebab-description>
 
-**5c. Testing Implementation**
-- Create comprehensive tests for the component
-- Follow project's existing testing patterns and frameworks
-- Ensure tests cover edge cases mentioned in brainstorm
-- Include integration tests if the component interacts with other systems
+Commit message: feat(<scope>): <what was done in present tense>
 
-**5d. Validation & Issue Resolution**
-- Run all relevant tests for the new component
-- Run existing tests to ensure no regressions
-- **Auto-fix strategy**:
-  - If tests fail because feature needs more functionality: implement missing parts
-  - If tests fail due to bugs: fix the bugs in implementation
-  - If tests fail due to wrong testing approach: fix the testing strategy ONLY if it's genuinely incorrect
-  - NEVER adjust tests just to make them pass if the implementation is wrong
+                <optional body: 1-3 sentences on why, not what>
 
-**5e. Human Review Checkpoint**
-After each major component:
-- Summarize what was implemented
-- Show test results and validation status
-- Wait for approval before proceeding to next component
-- Address any feedback or requested changes
+PR title:       feat(<scope>): <same as commit title>
 
-**Step 6: Progress Tracking** (if applicable)
-For substantial features:
-- Update brainstorm file with implementation progress
-- Mark completed phases/components
-- Note any architectural decisions made during implementation
-- DO NOT alter the original feature plan unless explicitly requested
+PR description:
+## What
 
-**Step 7: Documentation Updates**
-Check for project-specific documentation needs:
+<1-2 sentences: the problem this solves and how>
 
-**Project Documentation:**
-- Look for `docs/feature/` or similar project documentation structure
-- If found, either:
-  - Update existing feature documentation with new implementation details
-  - Create new feature documentation if this is a significant new feature
-- Include API documentation, usage examples, and integration notes
+## Changes
 
-**Claude Documentation:**
-- Update project CLAUDE.md if implementation introduces new patterns, technologies, or architectural changes
-- Document any new development workflows or testing approaches
-- Note any new dependencies or configuration requirements
+- <key change 1>
+- <key change 2>
+- ...
 
-**Step 8: Final Validation & Completion**
-Before marking complete:
-- Run full test suite to ensure everything works
-- Validate all success criteria from brainstorm are met
-- Ensure feature works end-to-end as planned
-- Check for any remaining TODOs or incomplete implementations
+## Testing
 
-**Step 9: Post-Implementation Options**
-After successful completion, ask:
-- "Should I run `/workflow/pre-commit-review` to review all changes before committing?"
-- "Are there any additional validations or reviews needed?"
-- "Should we update any additional documentation or configurations?"
+<how to verify: what to click, what endpoint to hit, what to look for>
+```
 
-**Critical Guidelines:**
-- **Follow brainstorm plan exactly** - don't deviate without permission
-- **Test continuously** - never move to next component with failing tests  
-- **Auto-fix aggressively** - resolve issues immediately, don't defer
-- **Maintain project consistency** - follow existing patterns and conventions
-- **Add concise, meaningful comments** using agreed-upon style
-- **Document as you go** - keep all documentation current
-- **Ask before major decisions** - pause for architectural choices not in brainstorm
-- **Preserve existing functionality** - ensure no regressions
+Use conventional commit types: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`. The scope should
+be the domain or module (e.g., `alerts`, `mailrisk`, `export`). If the change spans multiple
+scopes, pick the most significant one.
 
-**When requesting external help:**
-If I need clarification on third-party integrations or unclear brainstorm details, I'll ask: "I need clarification on [specific aspect] to implement this correctly. Can you provide more details or point me to relevant documentation?"
+---
 
-**Error Handling Strategy:**
-- Implementation bugs: Fix immediately and continue
-- Missing dependencies: Install and configure appropriately  
-- Test failures: Analyze root cause and fix properly
-- Integration issues: Resolve by adjusting implementation, not tests
-- Architecture conflicts: Pause and ask for guidance
+## Guidelines
 
-**Progress Communication:**
-Throughout implementation, I'll provide clear updates:
-- "Implementing [component]: [brief description]"
-- "Tests created and passing for [component]"
-- "Ready for review: [component] is complete and validated"
-- "Moving to next component: [next component name]"
+**Follow the plan, don't extend it.** If the brainstorm says "add X," add X. Don't also add Y
+because it seems related. Additions not in the plan need user approval.
 
-Begin implementation now.
+**Parallel where safe, sequential where not.** Independent backend and frontend work can go in
+parallel subagents. Work within the same file or where one task depends on another output must be
+sequential.
 
-## Human Review Required
-- [ ] Specify preferred code commenting style before implementation begins
-- [ ] Approve implementation approach and component breakdown
-- [ ] Review and validate each major component after implementation
-- [ ] Confirm final feature meets all brainstorm success criteria
-- [ ] Approve any architectural decisions not explicit in brainstorm
+**Tests before and after.** The baseline in Step 3 and the final run in Step 5 are both required.
+Don't skip them.
 
-## Success Criteria
-- Complete feature implemented according to brainstorm specifications
-- All tests passing throughout implementation process
-- No regressions in existing functionality
-- Concise, meaningful comments added throughout implementation
-- Documentation updated appropriately (project docs and CLAUDE.md if needed)
-- Progress tracked in brainstorm file if applicable
-- Feature works end-to-end as designed
-- Ready for pre-commit review if requested
+**Ask at crossroads, then stop.** When you need a decision, ask and wait. Don't make calls
+silently. Don't soften the ask by also providing a conditional plan — just ask.
+
+**Match existing patterns exactly.** This is not the time to refactor. If the project does X, do X.
+If the plan says "follow the pattern of Y," read Y first and actually follow it.
+
+**Documentation check is not optional.** Search for existing docs before deciding whether to write
+or update them.

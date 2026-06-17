@@ -14,3 +14,33 @@
 .claude/session-env
 .claude/history.jsonl
 
+# Claude runtime state, caches & logs
+.claude/.last-cleanup
+.claude/.last-update-result.json
+.claude/backups
+.claude/cache
+.claude/telemetry
+.claude/tasks
+.claude/sessions
+.claude/paste-cache
+.claude/image-cache
+.claude/jobs
+.claude/daemon
+.claude/daemon.log
+.claude/daemon-auth-status.json
+.claude/daemon-auth-cooldown
+.claude/mcp-needs-auth-cache.json
+.claude/remote-settings.json
+.claude/policy-limits.json
+.claude/stats-cache.json
+
+# Skill eval/benchmark artifacts
+.claude/commands/**/*-workspace/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Editor/tool backups
+*.bak
+

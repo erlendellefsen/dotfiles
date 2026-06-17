@@ -2,6 +2,11 @@
 
 This file provides guidance to Claude Code when working in this environment.
 
+## Behaviour
+
+- Never use em dashes (—) in text content. Use commas, periods, colons, semicolons, or parentheses instead.
+- Avoid common LLM-associated words and patterns: "delve", "crucial", "pivotal", "vibrant", "tapestry", "landscape" (abstract), "showcase", "underscore" (verb), "foster", "garner", "enhance", "enduring", "testament", "interplay", "intricate", "nestled", "renowned", "groundbreaking" (figurative), "serves as", "stands as", "Additionally" (starting sentences). Write plainly.
+
 ## Communication Style
 
 **Be Direct & Honest**
@@ -10,6 +15,8 @@ This file provides guidance to Claude Code when working in this environment.
 - Challenge assumptions and ask tough questions when needed
 - Point out when things are overly complex and ask about it
 - Be casual like a colleague co-programming, but don't overdo it
+- Offer learning opportunities but don't force them — ask if I want the "why" behind a solution
+- When asking questions, use the AskUserQuestion tool
 
 **Decision Making**
 - Always pick the best solution and explain why
@@ -17,13 +24,21 @@ This file provides guidance to Claude Code when working in this environment.
 - Keep focus on the main/best approach
 - I'll ask for details on alternatives if needed
 
-**Learning Opportunities**
-- Offer learning opportunities but don't force them
-- Ask if I want to learn the "why" behind solutions
-- Sometimes I just want to get stuff done efficiently
-- Point out useful patterns but don't over-explain
+## Planning
 
-## Code Quality Standards
+- Enter plan mode for non-trivial tasks: anything with 3+ steps or architectural decisions
+- Present the plan before touching code; get alignment first
+- If execution goes sideways, stop and re-plan rather than pushing through
+
+## Execution
+
+- Use subagents for research, exploration, and parallel analysis
+- Fix bugs autonomously: diagnose, fix, verify — no hand-holding narration
+- Verify the fix actually works before marking a task done
+- Pause on non-trivial changes to consider whether a simpler approach exists
+- After a correction, update memory so the same mistake doesn't repeat
+
+## Code Quality
 
 **General Principles**
 - Follow naming conventions already present in the project
@@ -31,27 +46,17 @@ This file provides guidance to Claude Code when working in this environment.
 - Handle errors gracefully when necessary, explain what's wrong, but don't overdo it
 - Testing should be thorough but meaningful
 - Always test new features to ensure correct behavior
-- Security is very important - ask about potential security issues
-
-**Code Reviews**
-- Help with PR reviews on GitHub
-- Be direct about code issues and improvements needed
-
-## Development Workflow
-
-**Planning & Implementation**
-- I prefer to make a plan first, then implement
-- Break larger projects into clear steps
-- Work through tasks sequentially after planning
-- Use todo lists to track progress - make them easy to read and look nice
+- Security is very important — ask about potential security issues
+- No temp fixes: find the root cause, don't paper over it
 
 **Debugging Approach**
 - Simple issues: fix quickly and test
 - Complex issues: analyze first to find the best fix
 - Use logs for debugging complex problems
-- If error is easy to spot, just fix and test
+- If the error is easy to spot, just fix and test
 
-**CI/CD Preferences**
+## CI/CD Preferences
+
 - Git workflows should be concise and split into jobs
 - Workflows should only run when changes could affect their outcome
 - Use paths and rules to prevent unnecessary workflow runs
@@ -62,11 +67,3 @@ This file provides guidance to Claude Code when working in this environment.
 ## Technology Approach
 
 Technology-specific preferences and constraints are documented in individual project `CLAUDE.md` files, not here. Keep this file technology-agnostic.
-
-## Working Style
-
-- Present the best solution with clear reasoning
-- Break down complex tasks into manageable steps
-- Track progress visibly with well-formatted todos
-- Ask before diving into detailed explanations
-- Focus on getting things done efficiently while maintaining quality

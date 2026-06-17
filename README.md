@@ -11,7 +11,7 @@ brew install stow                # Symlink manager
 brew install oh-my-posh          # Prompt theming
 brew install fzf                 # Fuzzy finder
 brew install zoxide              # Smarter cd command
-brew install asdf                # Version manager
+brew install mise                # Version manager
 ```
 
 ### Optional
@@ -42,7 +42,9 @@ stow --adopt .
 - `.config/ohmyposh/` - Prompt theme
 - `.config/linearmouse/` - Mouse settings
 - `.config/gh/` - GitHub CLI
-- `.gitconfig` - Git configuration
+- `.config/git/` - Git configuration
+- `.config/tmux/` - tmux configuration
+- `.config/zed/` - Zed editor settings
 - `.claude/` - Claude Code commands and settings
 
 ## Adding New Dotfiles

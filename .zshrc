@@ -51,7 +51,7 @@ bindkey '^n' history-search-forward
 # History
 HISTSIZE=5000
 HISTFILE="$HOME/.zsh_history"
-SAVEHIST=HISTSIZE
+SAVEHIST=$HISTSIZE
 HISTDUP=erase
 setopt appendhistory
 setopt sharehistory
@@ -74,8 +74,6 @@ if [[ "$CLAUDECODE" != "1" ]]; then
     eval "$(zoxide init --cmd cd zsh)"
 fi
 
-source <(echo 'export PATH="$HOME/.asdf/shims:$PATH"')
-
 export PATH="$PATH:$DOTNET_ROOT"
 export PATH="$PATH:$HOME/.dotnet/tools"
 export PATH="$HOME/.local/bin:$PATH"
@@ -84,16 +82,14 @@ export PATH="$HOME/.local/bin:$PATH"
 export FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT=1
 
 # SSH Agent
-# ssh-add --apple-use-keychain ~/.ssh/git_signing_key
 eval "$(ssh-agent -s)" > /dev/null
 ssh-add --apple-use-keychain ~/.ssh/git_signing_key
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
-# bun completions
-[ -s "/Users/ekbe/.bun/_bun" ] && source "/Users/ekbe/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
-eval "$(/Users/ekbe/.local/bin/mise activate zsh)" # added by https://mise.run/zsh
+# mise (version manager)
 eval "$(mise activate zsh)"

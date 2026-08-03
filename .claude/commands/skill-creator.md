@@ -5,9 +5,9 @@ description: Create new skills, modify and improve existing skills, and measure 
 
 # Skill Creator
 
-**Skill installation path:** `~/.claude/commands/skill-creator/`
+**Skill installation path:** `~/.claude/skill-creator-lib/`
 
-All path references below (agents/, scripts/, assets/, references/, eval-viewer/) are relative to this installation path. Use absolute paths when reading files or running scripts, e.g., `~/.claude/commands/skill-creator/agents/grader.md`.
+All path references below (agents/, scripts/, assets/, references/, eval-viewer/) are relative to this installation path. Use absolute paths when reading files or running scripts, e.g., `~/.claude/skill-creator-lib/agents/grader.md`.
 
 ---
 
@@ -164,7 +164,7 @@ Save test cases to `evals/evals.json`. Don't write assertions yet — just the p
 }
 ```
 
-See `~/.claude/commands/skill-creator/references/schemas.md` for the full schema (including the `assertions` field, which you'll add later).
+See `~/.claude/skill-creator-lib/references/schemas.md` for the full schema (including the `assertions` field, which you'll add later).
 
 ## Running and evaluating test cases
 
@@ -228,20 +228,20 @@ This is the only opportunity to capture this data — it comes through the task 
 
 Once all runs are done:
 
-1. **Grade each run** — spawn a grader subagent (or grade inline) that reads `~/.claude/commands/skill-creator/agents/grader.md` and evaluates each assertion against the outputs. Save results to `grading.json` in each run directory. The grading.json expectations array must use the fields `text`, `passed`, and `evidence` (not `name`/`met`/`details` or other variants) — the viewer depends on these exact field names. For assertions that can be checked programmatically, write and run a script rather than eyeballing it — scripts are faster, more reliable, and can be reused across iterations.
+1. **Grade each run** — spawn a grader subagent (or grade inline) that reads `~/.claude/skill-creator-lib/agents/grader.md` and evaluates each assertion against the outputs. Save results to `grading.json` in each run directory. The grading.json expectations array must use the fields `text`, `passed`, and `evidence` (not `name`/`met`/`details` or other variants) — the viewer depends on these exact field names. For assertions that can be checked programmatically, write and run a script rather than eyeballing it — scripts are faster, more reliable, and can be reused across iterations.
 
 2. **Aggregate into benchmark** — run the aggregation script from the skill-creator directory:
    ```bash
    python -m scripts.aggregate_benchmark <workspace>/iteration-N --skill-name <name>
    ```
-   Run this from `~/.claude/commands/skill-creator/`. This produces `benchmark.json` and `benchmark.md` with pass_rate, time, and tokens for each configuration, with mean ± stddev and the delta. If generating benchmark.json manually, see `~/.claude/commands/skill-creator/references/schemas.md` for the exact schema the viewer expects.
+   Run this from `~/.claude/skill-creator-lib/`. This produces `benchmark.json` and `benchmark.md` with pass_rate, time, and tokens for each configuration, with mean ± stddev and the delta. If generating benchmark.json manually, see `~/.claude/skill-creator-lib/references/schemas.md` for the exact schema the viewer expects.
 Put each with_skill version before its baseline counterpart.
 
-3. **Do an analyst pass** — read the benchmark data and surface patterns the aggregate stats might hide. See `~/.claude/commands/skill-creator/agents/analyzer.md` (the "Analyzing Benchmark Results" section) for what to look for — things like assertions that always pass regardless of skill (non-discriminating), high-variance evals (possibly flaky), and time/token tradeoffs.
+3. **Do an analyst pass** — read the benchmark data and surface patterns the aggregate stats might hide. See `~/.claude/skill-creator-lib/agents/analyzer.md` (the "Analyzing Benchmark Results" section) for what to look for — things like assertions that always pass regardless of skill (non-discriminating), high-variance evals (possibly flaky), and time/token tradeoffs.
 
 4. **Launch the viewer** with both qualitative outputs and quantitative data:
    ```bash
-   nohup python ~/.claude/commands/skill-creator/eval-viewer/generate_review.py \
+   nohup python ~/.claude/skill-creator-lib/eval-viewer/generate_review.py \
      <workspace>/iteration-N \
      --skill-name "my-skill" \
      --benchmark <workspace>/iteration-N/benchmark.json \
@@ -330,7 +330,7 @@ Keep going until:
 
 ## Advanced: Blind comparison
 
-For situations where you want a more rigorous comparison between two versions of a skill (e.g., the user asks "is the new version actually better?"), there's a blind comparison system. Read `~/.claude/commands/skill-creator/agents/comparator.md` and `~/.claude/commands/skill-creator/agents/analyzer.md` for the details. The basic idea is: give two outputs to an independent agent without telling it which is which, and let it judge quality. Then analyze why the winner won.
+For situations where you want a more rigorous comparison between two versions of a skill (e.g., the user asks "is the new version actually better?"), there's a blind comparison system. Read `~/.claude/skill-creator-lib/agents/comparator.md` and `~/.claude/skill-creator-lib/agents/analyzer.md` for the details. The basic idea is: give two outputs to an independent agent without telling it which is which, and let it judge quality. Then analyze why the winner won.
 
 This is optional, requires subagents, and most users won't need it. The human review loop is usually sufficient.
 
@@ -367,7 +367,7 @@ The key thing to avoid: don't make should-not-trigger queries obviously irreleva
 
 Present the eval set to the user for review using the HTML template:
 
-1. Read the template from `~/.claude/commands/skill-creator/assets/eval_review.html`
+1. Read the template from `~/.claude/skill-creator-lib/assets/eval_review.html`
 2. Replace the placeholders:
    - `__EVAL_DATA_PLACEHOLDER__` → the JSON array of eval items (no quotes around it — it's a JS variable assignment)
    - `__SKILL_NAME_PLACEHOLDER__` → the skill's name
@@ -382,7 +382,7 @@ This step matters — bad eval queries lead to bad descriptions.
 
 Tell the user: "This will take some time — I'll run the optimization loop in the background and check on it periodically."
 
-Save the eval set to the workspace, then run in the background (from `~/.claude/commands/skill-creator/`):
+Save the eval set to the workspace, then run in the background (from `~/.claude/skill-creator-lib/`):
 
 ```bash
 python -m scripts.run_loop \
@@ -419,7 +419,7 @@ Check whether you have access to the `present_files` tool. If you don't, skip th
 python -m scripts.package_skill <path/to/skill-folder>
 ```
 
-Run this from `~/.claude/commands/skill-creator/`. After packaging, direct the user to the resulting `.skill` file path so they can install it.
+Run this from `~/.claude/skill-creator-lib/`. After packaging, direct the user to the resulting `.skill` file path so they can install it.
 
 ---
 
@@ -460,12 +460,12 @@ If you're in Cowork, the main things to know are:
 
 The agents/ directory contains instructions for specialized subagents. Read them when you need to spawn the relevant subagent.
 
-- `~/.claude/commands/skill-creator/agents/grader.md` — How to evaluate assertions against outputs
-- `~/.claude/commands/skill-creator/agents/comparator.md` — How to do blind A/B comparison between two outputs
-- `~/.claude/commands/skill-creator/agents/analyzer.md` — How to analyze why one version beat another
+- `~/.claude/skill-creator-lib/agents/grader.md` — How to evaluate assertions against outputs
+- `~/.claude/skill-creator-lib/agents/comparator.md` — How to do blind A/B comparison between two outputs
+- `~/.claude/skill-creator-lib/agents/analyzer.md` — How to analyze why one version beat another
 
 The references/ directory has additional documentation:
-- `~/.claude/commands/skill-creator/references/schemas.md` — JSON structures for evals.json, grading.json, etc.
+- `~/.claude/skill-creator-lib/references/schemas.md` — JSON structures for evals.json, grading.json, etc.
 
 ---
 
@@ -475,7 +475,7 @@ Repeating one more time the core loop here for emphasis:
 - Draft or edit the skill
 - Run claude-with-access-to-the-skill on test prompts
 - With the user, evaluate the outputs:
-  - Create benchmark.json and run `~/.claude/commands/skill-creator/eval-viewer/generate_review.py` to help the user review them
+  - Create benchmark.json and run `~/.claude/skill-creator-lib/eval-viewer/generate_review.py` to help the user review them
   - Run quantitative evals
 - Repeat until you and the user are satisfied
 - Package the final skill and return it to the user.

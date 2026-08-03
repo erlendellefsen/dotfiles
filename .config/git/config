@@ -6,7 +6,6 @@
 	format = ssh
 [commit]
 	gpgSign = true
-    template = ~/.config/git/template
 [init]
 	defaultBranch = main
 [push]

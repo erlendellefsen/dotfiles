@@ -10,9 +10,7 @@
       "WebFetch(domain:docs.claude.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:learn.microsoft.com)",
-      "mcp__microsoft_docs__*",
-      "mcp__bifrost__*"
+      "WebFetch(domain:learn.microsoft.com)"
     ],
     "deny": [
       "Bash(sudo:*)",
@@ -54,23 +52,30 @@
     ],
     "defaultMode": "default"
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true,
+    "ponytail@ponytail": true
+  },
+  "extraKnownMarketplaces": {
+    "intility-claude-plugins": {
+      "source": {
+        "source": "git",
+        "url": "git@github.com:intility/claude-plugins.git"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
+  },
   "sandbox": {
     "enabled": true,
-    "excludedCommands": [
-      "docker *"
-    ],
-    "filesystem": {
-      "allowWrite": [
-        "~/Library/Developer/Xcode/DerivedData",
-        "~/Library/Caches",
-        "~/Library/pnpm",
-        "~/.nuget",
-        "~/.dotnet",
-        "~/.npm",
-        "~/.cache",
-        "~/.kube"
-      ]
-    },
     "network": {
       "allowedDomains": [
         "github.com",
@@ -86,6 +91,18 @@
         "files.pythonhosted.org",
         "deno.land",
         "jsr.io"
+      ]
+    },
+    "filesystem": {
+      "allowWrite": [
+        "~/Library/Developer/Xcode/DerivedData",
+        "~/Library/Caches",
+        "~/Library/pnpm",
+        "~/.nuget",
+        "~/.dotnet",
+        "~/.npm",
+        "~/.cache",
+        "~/.kube"
       ]
     },
     "credentials": {
@@ -107,36 +124,17 @@
           "mode": "deny"
         }
       ]
-    }
-  },
-  "model": "opus[1m]",
-  "statusLine": {
-    "type": "command",
-    "command": "bash /Users/ekbe/.claude/statusline-command.sh"
-  },
-  "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true,
-    "ponytail@ponytail": true
-  },
-  "extraKnownMarketplaces": {
-    "intility-claude-plugins": {
-      "source": {
-        "source": "git",
-        "url": "git@github.com:intility/claude-plugins.git"
-      }
     },
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    }
+    "excludedCommands": [
+      "docker *",
+      "dotnet *",
+      "deno *"
+    ]
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "awaySummaryEnabled": false,
   "tui": "fullscreen",
-  "skipDangerousModePermissionPrompt": true,
   "editorMode": "normal",
   "terminalProgressBarEnabled": true,
   "skipAutoPermissionPrompt": true,

@@ -1,4 +1,5 @@
-theme = One Dark
+theme = Catppuccin Frappe
+
 keybind = shift+enter=text:\x1b\r
 
 # Scrollback

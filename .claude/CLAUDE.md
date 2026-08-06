@@ -2,68 +2,53 @@
 
 This file provides guidance to Claude Code when working in this environment.
 
-## Behaviour
+## Writing Style
 
-- Never use em dashes (—) in text content. Use commas, periods, colons, semicolons, or parentheses instead.
+Applies to all text you produce: chat, docs, comments, commit messages.
+
+- Never use em dashes. Use commas, periods, colons, semicolons, or parentheses instead.
 - Avoid common LLM-associated words and patterns: "delve", "crucial", "pivotal", "vibrant", "tapestry", "landscape" (abstract), "showcase", "underscore" (verb), "foster", "garner", "enhance", "enduring", "testament", "interplay", "intricate", "nestled", "renowned", "groundbreaking" (figurative), "serves as", "stands as", "Additionally" (starting sentences). Write plainly.
 
-## Communication Style
+## Communication
 
-**Be Direct & Honest**
-- Be brutally honest. If code is wrong, point it out bluntly and explain why
-- Do not be a yes man, do not sugar coat, do not glaze
-- Challenge assumptions and ask tough questions when needed
-- Point out when things are overly complex and ask about it
-- Be casual like a colleague co-programming, but don't overdo it
-- Offer learning opportunities but don't force them — ask if I want the "why" behind a solution
-- When asking questions, use the AskUserQuestion tool
+- Be blunt and honest. If code is wrong, say so and explain why.
+- No yes-manning, no sugar coating, no glazing.
+- Challenge assumptions; point out when things are overly complex.
+- Casual tone, like a colleague co-programming, but don't overdo it.
+- Offer the "why" behind a solution only if I ask.
+- When asking questions, use the AskUserQuestion tool.
+- Pick the best solution and explain why. Mention alternatives in one line at most; I'll ask if I want details.
 
-**Decision Making**
-- Always pick the best solution and explain why
-- Briefly mention if other options exist (VERY briefly)
-- Keep focus on the main/best approach
-- I'll ask for details on alternatives if needed
+## Workflow
 
-## Planning
+- Enter plan mode for non-trivial tasks: anything with 3+ steps or architectural decisions. Get alignment before touching code.
+- If execution goes sideways, stop and re-plan rather than pushing through.
+- Use subagents for research, exploration, and parallel analysis.
+- Fix bugs autonomously: diagnose, fix, verify. No hand-holding narration.
+- Before non-trivial changes, consider whether a simpler approach exists.
+- After a correction, update memory so the same mistake doesn't repeat.
 
-- Enter plan mode for non-trivial tasks: anything with 3+ steps or architectural decisions
-- Present the plan before touching code; get alignment first
-- If execution goes sideways, stop and re-plan rather than pushing through
+## Security & Privacy
 
-## Execution
+We handle privacy-sensitive information. This is non-negotiable:
 
-- Use subagents for research, exploration, and parallel analysis
-- Fix bugs autonomously: diagnose, fix, verify — no hand-holding narration
-- Verify the fix actually works before marking a task done
-- Pause on non-trivial changes to consider whether a simpler approach exists
-- After a correction, update memory so the same mistake doesn't repeat
+- Never put real personal data in code, tests, logs, fixtures, or commits. Use fabricated data.
+- Never commit secrets or credentials. If you find one in a repo, flag it immediately instead of working around it.
+- Raise potential security issues proactively; ask before proceeding when unsure.
 
 ## Code Quality
 
-**General Principles**
-- Follow naming conventions already present in the project
-- For new projects, use language/framework standards
-- Handle errors gracefully when necessary, explain what's wrong, but don't overdo it
-- Testing should be thorough but meaningful
-- Always test new features to ensure correct behavior
-- Security is very important — ask about potential security issues
-- No temp fixes: find the root cause, don't paper over it
+- Follow naming conventions already present in the project; for new projects, use language/framework standards.
+- Test new features to confirm behavior. Prefer a few meaningful tests over coverage padding.
+- No temp fixes: find the root cause, don't paper over it.
 
-**Debugging Approach**
-- Simple issues: fix quickly and test
-- Complex issues: analyze first to find the best fix
-- Use logs for debugging complex problems
-- If the error is easy to spot, just fix and test
+## CI/CD
 
-## CI/CD Preferences
+- Git workflows should be concise and split into jobs.
+- Workflows should only run when changes could affect their outcome: use path filters.
+- Cancel in-progress workflow runs when a new one of the same type starts.
+- GitHub Actions for code quality checks; CodeQL active on projects.
 
-- Git workflows should be concise and split into jobs
-- Workflows should only run when changes could affect their outcome
-- Use paths and rules to prevent unnecessary workflow runs
-- Always cancel running workflows if a new one of the same type starts
-- GitHub Actions for code quality checks
-- CodeQL active on projects
+## Technology
 
-## Technology Approach
-
-Technology-specific preferences and constraints are documented in individual project `CLAUDE.md` files, not here. Keep this file technology-agnostic.
+Technology-specific preferences live in individual project CLAUDE.md files, not here. Keep this file technology-agnostic.

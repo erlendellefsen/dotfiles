@@ -35,15 +35,6 @@
 .claude/stats-cache.json
 .claude/.ponytail-active
 
-# Skill eval/benchmark artifacts. Anything under commands/ is registered as a
-# slash command, so eval workspaces leak into the system prompt as phantom
-# skills. Keep them out of commands/ entirely, not just out of git.
-.claude/commands/**/*-workspace/
-
-# Python caches
-__pycache__/
-*.pyc
-
 # Editor/tool backups
 *.bak
 

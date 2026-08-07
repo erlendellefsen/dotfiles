@@ -128,7 +128,8 @@
     "excludedCommands": [
       "docker *",
       "dotnet *",
-      "deno *"
+      "deno *",
+      "gh *"
     ]
   },
   "alwaysThinkingEnabled": true,

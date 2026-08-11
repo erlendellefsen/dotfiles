@@ -74,7 +74,6 @@ if [[ "$CLAUDECODE" != "1" ]]; then
     eval "$(zoxide init --cmd cd zsh)"
 fi
 
-export PATH="$PATH:$DOTNET_ROOT"
 export PATH="$PATH:$HOME/.dotnet/tools"
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -82,7 +81,6 @@ export PATH="$HOME/.local/bin:$PATH"
 export FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT=1
 
 # SSH Agent
-eval "$(ssh-agent -s)" > /dev/null
 ssh-add --apple-use-keychain ~/.ssh/git_signing_key
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 
@@ -93,3 +91,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # mise (version manager)
 eval "$(mise activate zsh)"
+
+# opencode
+export PATH=/Users/ekbe/.opencode/bin:$PATH

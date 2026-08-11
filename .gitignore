@@ -34,7 +34,7 @@
 .claude/policy-limits.json
 .claude/stats-cache.json
 .claude/.ponytail-active
+.claude/remote-settings-consent.json
 
 # Editor/tool backups
 *.bak
-

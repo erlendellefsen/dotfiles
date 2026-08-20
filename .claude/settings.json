@@ -56,7 +56,8 @@
   },
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "mattpocock-skills@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "intility-claude-plugins": {
@@ -130,6 +131,7 @@
       "gh *"
     ]
   },
+  "outputStyle": "ASD-STE100",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "awaySummaryEnabled": false,

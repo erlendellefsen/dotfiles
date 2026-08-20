@@ -10,7 +10,14 @@
       "WebFetch(domain:docs.claude.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:learn.microsoft.com)"
+      "WebFetch(domain:learn.microsoft.com)",
+      "Bash(git *)",
+      "Bash(gh status:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh repo view:*)"
     ],
     "deny": [
       "Bash(sudo:*)",
@@ -128,7 +135,8 @@
       "docker *",
       "dotnet *",
       "deno *",
-      "gh *"
+      "gh *",
+      "git *"
     ]
   },
   "outputStyle": "ASD-STE100",
